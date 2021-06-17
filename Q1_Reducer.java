@@ -1,15 +1,20 @@
+// exceptions import
 import java.io.IOException;
+
+// import box classes
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
+
+// import reducer class
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.Reducer.Context;
 
-public class PrimeReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
+public class MyReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
 
 	public void reduce(Text key, Iterable<IntWritable> values, Context context)
 			throws IOException, InterruptedException {
 		int sum = 0;
-		if (key.equals("PrimeSum")) {
+		if (key.equals("Prime")) {
 			for (IntWritable value : values) {
 				sum += value.get();
 			}
@@ -18,6 +23,6 @@ public class PrimeReducer extends Reducer<Text, IntWritable, Text, IntWritable> 
 				sum += value.get();
 			}
 		}
-	}
 		context.write(key, new IntWritable(sum));
+	}
 }
